@@ -18,7 +18,7 @@ steps:
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
-inputs:
+  inputs:
     command: 'restore'
     feedsToUse: 'config'
     nugetConfigPath: 'nuget.config'
