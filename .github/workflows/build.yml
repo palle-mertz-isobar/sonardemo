@@ -36,12 +36,6 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-          
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.2
-        
-      - name: Restore NuGet Packages
-        run: nuget restore 'Sonar demo Alloy.sln'
         
       - name: Build and analyze
         env:
@@ -49,6 +43,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"palle-mertz-isobar_sonardemo" /o:"palle-mertz-isobar" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          msbuild 'Sonar demo Alloy.sln' /p:Configuration=Release
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          "SonarScanner.MSBuild.exe" begin /k:"palle-mertz-isobar_sonardemo" /o:"palle-mertz-isobar" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="Scripts/**"
+          "MSBuild.exe" WebApp45.sln /t:Rebuild
+          "SonarScanner.MSBuild.exe" end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"        
