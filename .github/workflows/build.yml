@@ -44,5 +44,5 @@ jobs:
         shell: powershell
         run: |
           "SonarScanner.MSBuild.exe" begin /k:"palle-mertz-isobar_sonardemo" /o:"palle-mertz-isobar" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="Scripts/**"
-          "MSBuild.exe" WebApp45.sln /t:Rebuild
+          "MSBuild.exe" "Sonar demo Alloy.sln" /t:Rebuild
           "SonarScanner.MSBuild.exe" end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"        
