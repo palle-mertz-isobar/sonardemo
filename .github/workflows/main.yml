@@ -11,7 +11,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: pull-request
+      id: open-pr
       uses: repo-sync/pull-request@v2
       with:
         destination_branch: "master"
         github_token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: hmarr/auto-approve-action@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        pull-request-number: ${{steps.open-pr.outputs.pr_number}}        
